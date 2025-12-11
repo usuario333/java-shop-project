@@ -1,21 +1,14 @@
 package store.ui.panels;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import store.models.Product;
 import store.services.ProductService;
 import store.ui.dialogs.NewProductDialog;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ProductsPanel extends JPanel {
     //Dependences
@@ -23,12 +16,12 @@ public class ProductsPanel extends JPanel {
 
     //Table
     DefaultTableModel tableModel;
-    
+
     //Table Columns
     String[] columns = {"Referencia", "Nombre", "Precio", "Categoría"};
 
     //Buttons
-    JButton addRowButton;
+    JButton addRowProductButton;
 
     public ProductsPanel(ProductService productService) {
         this.productService = productService;
@@ -58,8 +51,12 @@ public class ProductsPanel extends JPanel {
 
         // BOTTOM BUTTONS
         JPanel bottomPanel = new JPanel(new FlowLayout());
-        addRowButton = new JButton("Agregar producto");
-        bottomPanel.add(addRowButton);
+        addRowProductButton = new JButton("Agregar producto");
+
+        bottomPanel.add(new JLabel("                                                "));
+        bottomPanel.add(addRowProductButton);
+        bottomPanel.add(new JLabel("                                                "));
+
         add(bottomPanel, BorderLayout.SOUTH);
     }
 
@@ -67,20 +64,21 @@ public class ProductsPanel extends JPanel {
         tableModel.setRowCount(0);
         for (Product product : productService.getProducts().values()) {
             tableModel.addRow(new Object[]{
-                product.getReference(),
-                product.getName(),
-                product.getPrice(),
-                product.getCategory().getName()
+                    product.getReference(),
+                    product.getName(),
+                    product.getPrice(),
+                    product.getCategory().getName()
             });
         }
     }
 
     public void initActions() {
-        addRowButton.addActionListener(new ActionListener() {
+        addRowProductButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new NewProductDialog(productService).setVisible(true);
-                // Refrescar la tabla
+                NewProductDialog dialog = new NewProductDialog(productService);
+                dialog.setVisible(true);
+
                 fillTable(); // Rellenar la tabla nuevamente
             }
         });

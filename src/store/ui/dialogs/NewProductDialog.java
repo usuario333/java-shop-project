@@ -1,21 +1,14 @@
 package store.ui.dialogs;
 
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-
 import store.models.Product;
 import store.models.ProductCategory;
 import store.services.ProductService;
 import store.utils.SHA256Hashing;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class NewProductDialog extends JDialog {
     //Dependences
@@ -23,17 +16,17 @@ public class NewProductDialog extends JDialog {
 
     public NewProductDialog(ProductService productService) {
         super(null, ModalityType.APPLICATION_MODAL);
-        
+
         this.productService = productService;
 
         setTitle("Nuevo producto");
 
         /* Limits and Layout*/
-        setBounds(200,200,400,400);
+        setBounds(200, 200, 400, 400);
 
         JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createTitledBorder("Nuevo Producto"));
-        panel.setLayout(new GridLayout(0,1));
+        panel.setBorder(BorderFactory.createTitledBorder("Datos del producto"));
+        panel.setLayout(new GridLayout(0, 1));
 
         panel.add(new JLabel("Referencia:"));
         JTextField referenceField = new JTextField(8);
@@ -78,13 +71,13 @@ public class NewProductDialog extends JDialog {
                     );
 
                 } else if (name.isEmpty()) {
-                        // Ventana de diálogo con un mensaje de error
-                        JOptionPane.showMessageDialog(
-                                NewProductDialog.this,
-                                "Debes escribir el nombre del producto",
-                                "Error",
-                                JOptionPane.ERROR_MESSAGE
-                        );
+                    // Ventana de diálogo con un mensaje de error
+                    JOptionPane.showMessageDialog(
+                            NewProductDialog.this,
+                            "Debes escribir el nombre del producto",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
 
                 } else if (price <= 0) {
                     // Ventana de diálogo con un mensaje de error
@@ -105,13 +98,13 @@ public class NewProductDialog extends JDialog {
                 } else {
                     // Agregar el nuevo cliente al servicio
                     productService.addProduct(
-                        new Product(
-                            SHA256Hashing.generateRandomHash(), 
-                            reference,
-                            name, 
-                            price,
-                            new ProductCategory(SHA256Hashing.generateRandomHash(), category)
-                        )
+                            new Product(
+                                    SHA256Hashing.generateRandomHash(),
+                                    reference,
+                                    name,
+                                    price,
+                                    new ProductCategory(SHA256Hashing.generateRandomHash(), category)
+                            )
                     );
 
                     // Cerrar el diálogo

@@ -1,37 +1,45 @@
 package store.ui.panels;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.sql.Date;
-
 import store.models.Order;
+import store.services.ClientService;
 import store.services.OrderService;
+import store.services.ProductService;
+import store.ui.dialogs.NewOrderDialog;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Date;
 
 public class OrdersPanel extends JPanel {
     //Dependences
     OrderService orderService;
+    ClientService clientService;
+    ProductService productService;
 
     //Table
     DefaultTableModel tableModel;
-    
+
     //Table Columns
     String[] columns = {"Fecha", "Cliente", "Estado", "Total"};
 
-    public OrdersPanel(OrderService orderService) {
+    //Buttons
+    JButton addRowOrderButton;
+
+    public OrdersPanel(OrderService orderService,
+                       ClientService clientService,
+                       ProductService productService) {
         this.orderService = orderService;
+        this.clientService = clientService;
+        this.productService = productService;
 
         setBorder(BorderFactory.createTitledBorder("Pedidos"));
         setBackground(Color.WHITE);
 
         initPanels();
+        initActions();
 
         fillTable();
     }
@@ -52,8 +60,12 @@ public class OrdersPanel extends JPanel {
 
         // BOTTOM BUTTONS
         JPanel bottomPanel = new JPanel(new FlowLayout());
-        JButton addRowButton = new JButton("Agregar pedido");
-        bottomPanel.add(addRowButton);
+        addRowOrderButton = new JButton("Agregar pedido");
+
+        bottomPanel.add(new JLabel("                                                "));
+        bottomPanel.add(new JLabel("                                                "));
+        bottomPanel.add(addRowOrderButton);
+
         add(bottomPanel, BorderLayout.SOUTH);
     }
 
@@ -61,11 +73,23 @@ public class OrdersPanel extends JPanel {
         tableModel.setRowCount(0);
         for (Order order : orderService.getOrders().values()) {
             tableModel.addRow(new Object[]{
-                new Date(order.getCreatedAt()).toString(),
-                order.getClient().getFullName(),
-                order.getCurrentStatus(),
-                order.getTotal()
+                    new Date(order.getCreatedAt()).toString(),
+                    order.getClient().getFullName(),
+                    order.getCurrentStatus(),
+                    order.getTotal()
             });
         }
+    }
+
+    public void initActions() {
+        addRowOrderButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                NewOrderDialog dialog = new NewOrderDialog(orderService);
+                dialog.setVisible(true);
+
+                fillTable(); // Rellenar la tabla nuevamente
+            }
+        });
     }
 }

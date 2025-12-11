@@ -1,12 +1,6 @@
 package store.ui;
 
-import javax.swing.*;
-
-import store.models.Client;
-import store.models.ItemOrder;
-import store.models.Order;
-import store.models.Product;
-import store.models.ProductCategory;
+import store.models.*;
 import store.services.ClientService;
 import store.services.OrderService;
 import store.services.ProductService;
@@ -16,6 +10,7 @@ import store.ui.panels.ProductsPanel;
 import store.ui.panels.WelcomePanel;
 import store.utils.SHA256Hashing;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,9 +19,6 @@ import java.time.Instant;
 public class MenuGUI extends JFrame {
     //Container
     Container contentPane;
-
-    //Panels
-    JPanel middlePanel;
 
     //Buttons
     JButton clientsButton;
@@ -118,7 +110,7 @@ public class MenuGUI extends JFrame {
         ordersButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                contentPane.add(new OrdersPanel(orderService), BorderLayout.CENTER);
+                contentPane.add(new OrdersPanel(orderService, clientService, productService), BorderLayout.CENTER);
                 contentPane.revalidate();
             }
         });
@@ -128,19 +120,19 @@ public class MenuGUI extends JFrame {
     public void initDefaultData() {
         //CLIENTS
         Client client1 = new Client(
-            SHA256Hashing.generateRandomHash(), 
-            "Facundo Garcés", 
-            "123456789"
+                SHA256Hashing.generateRandomHash(),
+                "Facundo Garcés",
+                "123456789"
         );
         Client client2 = new Client(
-            SHA256Hashing.generateRandomHash(), 
-            "Mariano Días", 
-            "659874789"
+                SHA256Hashing.generateRandomHash(),
+                "Mariano Días",
+                "659874789"
         );
         Client client3 = new Client(
-            SHA256Hashing.generateRandomHash(), 
-            "Lucas Boyé", 
-            "42653586453"
+                SHA256Hashing.generateRandomHash(),
+                "Lucas Boyé",
+                "42653586453"
         );
         clientService.addClient(client1);
         clientService.addClient(client2);
@@ -148,40 +140,40 @@ public class MenuGUI extends JFrame {
 
         //PRODUCTS
         ProductCategory category1 = new ProductCategory(
-            SHA256Hashing.generateRandomHash(),
-            "Frutas"
+                SHA256Hashing.generateRandomHash(),
+                "Frutas"
         );
 
         Product product1 = new Product(
-            SHA256Hashing.generateRandomHash(),
-            "JSDHFITW",
-            "Manzana",
-            2.0,
-            category1
+                SHA256Hashing.generateRandomHash(),
+                "JSDHFITW",
+                "Manzana",
+                2.0,
+                category1
         );
 
         Product product2 = new Product(
-            SHA256Hashing.generateRandomHash(),
-            "BVCVERYR",
-            "Pera",
-            3.0,
-            category1
+                SHA256Hashing.generateRandomHash(),
+                "BVCVERYR",
+                "Pera",
+                3.0,
+                category1
         );
 
         Product product3 = new Product(
-            SHA256Hashing.generateRandomHash(),
-            "OPFGHIRT",
-            "Naranja",
-            2.5,
-            category1
+                SHA256Hashing.generateRandomHash(),
+                "OPFGHIRT",
+                "Naranja",
+                2.5,
+                category1
         );
 
         Product product4 = new Product(
-            SHA256Hashing.generateRandomHash(),
-            "ASDKIUO",
-            "Plátano",
-            1.5,
-            category1
+                SHA256Hashing.generateRandomHash(),
+                "ASDKIUO",
+                "Plátano",
+                1.5,
+                category1
         );
 
         productService.addProduct(product1);
@@ -191,35 +183,35 @@ public class MenuGUI extends JFrame {
 
         //ORDERS
         ItemOrder itemOrder1 = new ItemOrder(
-            SHA256Hashing.generateRandomHash(),
-            product1,
-            1.0,
-            2
+                SHA256Hashing.generateRandomHash(),
+                product1,
+                1.0,
+                2
         );
         ItemOrder itemOrder2 = new ItemOrder(
-            SHA256Hashing.generateRandomHash(),
-            product2,
-            3.0,
-            5
+                SHA256Hashing.generateRandomHash(),
+                product2,
+                3.0,
+                5
         );
         ItemOrder itemOrder3 = new ItemOrder(
-            SHA256Hashing.generateRandomHash(),
-            product3,
-            1.5,
-            7
+                SHA256Hashing.generateRandomHash(),
+                product3,
+                1.5,
+                7
         );
 
         Order order1 = new Order(
-            SHA256Hashing.generateRandomHash(),
-            Instant.now().toEpochMilli(),
-            client1
+                SHA256Hashing.generateRandomHash(),
+                Instant.now().toEpochMilli(),
+                client1
         );
         order1.addItem(itemOrder1);
 
         Order order2 = new Order(
-            SHA256Hashing.generateRandomHash(),
-            Instant.now().toEpochMilli(),
-            client2
+                SHA256Hashing.generateRandomHash(),
+                Instant.now().toEpochMilli(),
+                client2
         );
         order2.addItem(itemOrder2);
         order2.addItem(itemOrder3);

@@ -1,22 +1,14 @@
 package store.ui.panels;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
 import store.models.Client;
 import store.services.ClientService;
 import store.ui.dialogs.NewClientDialog;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class ClientsPanel extends JPanel {
     //Dependences
@@ -24,13 +16,13 @@ public class ClientsPanel extends JPanel {
 
     //Table
     DefaultTableModel tableModel;
-    
+
     //Table Columns
     String[] tableColumns = {"Nombre", "Identification"};
 
     //Buttons
-    JButton addRowButton;
-    
+    JButton addRowClientButton;
+
     public ClientsPanel(ClientService clientService) {
         this.clientService = clientService;
 
@@ -59,9 +51,12 @@ public class ClientsPanel extends JPanel {
 
         // BOTTOM BUTTONS
         JPanel bottomPanel = new JPanel(new FlowLayout());
-        addRowButton = new JButton("Agregar cliente");
+        addRowClientButton = new JButton("Agregar cliente");
 
-        bottomPanel.add(addRowButton);
+        bottomPanel.add(addRowClientButton);
+        bottomPanel.add(new JLabel("                                                "));
+        bottomPanel.add(new JLabel("                                                "));
+
         add(bottomPanel, BorderLayout.SOUTH);
     }
 
@@ -69,18 +64,19 @@ public class ClientsPanel extends JPanel {
         tableModel.setRowCount(0);
         for (Client client : clientService.getClients().values()) {
             tableModel.addRow(new Object[]{
-                client.getFullName(),
-                client.getIdentification()
+                    client.getFullName(),
+                    client.getIdentification()
             });
         }
     }
 
     public void initActions() {
-        addRowButton.addActionListener(new ActionListener() {
+        addRowClientButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new NewClientDialog(clientService).setVisible(true);
-                // Refrescar la tabla
+                NewClientDialog dialog = new NewClientDialog(clientService);
+                dialog.setVisible(true);
+
                 fillTable(); // Rellenar la tabla nuevamente
             }
         });

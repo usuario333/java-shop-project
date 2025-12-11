@@ -54,8 +54,6 @@ public class ClientsPanel extends JPanel {
         addRowClientButton = new JButton("Agregar cliente");
 
         bottomPanel.add(addRowClientButton);
-        bottomPanel.add(new JLabel("                                                "));
-        bottomPanel.add(new JLabel("                                                "));
 
         add(bottomPanel, BorderLayout.SOUTH);
     }

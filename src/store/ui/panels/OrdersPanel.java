@@ -62,8 +62,6 @@ public class OrdersPanel extends JPanel {
         JPanel bottomPanel = new JPanel(new FlowLayout());
         addRowOrderButton = new JButton("Agregar pedido");
 
-        bottomPanel.add(new JLabel("                                                "));
-        bottomPanel.add(new JLabel("                                                "));
         bottomPanel.add(addRowOrderButton);
 
         add(bottomPanel, BorderLayout.SOUTH);

@@ -94,6 +94,8 @@ public class MenuGUI extends JFrame {
         clientsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                removeCenterPanel();
+
                 contentPane.add(new ClientsPanel(clientService), BorderLayout.CENTER);
                 contentPane.revalidate();
             }
@@ -102,6 +104,8 @@ public class MenuGUI extends JFrame {
         productsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                removeCenterPanel();
+
                 contentPane.add(new ProductsPanel(productService), BorderLayout.CENTER);
                 contentPane.revalidate();
             }
@@ -110,10 +114,18 @@ public class MenuGUI extends JFrame {
         ordersButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                contentPane.add(new OrdersPanel(orderService, clientService, productService), BorderLayout.CENTER);
+                removeCenterPanel();
+
+                contentPane.add(new OrdersPanel(orderService, clientService, productService),
+                        BorderLayout.CENTER);
                 contentPane.revalidate();
             }
         });
+    }
+
+    private void removeCenterPanel() {
+        BorderLayout layout = (BorderLayout) contentPane.getLayout();
+        contentPane.remove(layout.getLayoutComponent(BorderLayout.CENTER));
     }
 
     /* SET DEFAULT DATA FOR SERVICES */

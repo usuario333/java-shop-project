@@ -53,9 +53,7 @@ public class ProductsPanel extends JPanel {
         JPanel bottomPanel = new JPanel(new FlowLayout());
         addRowProductButton = new JButton("Agregar producto");
 
-        bottomPanel.add(new JLabel("                                                "));
         bottomPanel.add(addRowProductButton);
-        bottomPanel.add(new JLabel("                                                "));
 
         add(bottomPanel, BorderLayout.SOUTH);
     }

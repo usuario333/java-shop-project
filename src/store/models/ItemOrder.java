@@ -43,4 +43,9 @@ public class ItemOrder {
     public void setAmount(int amount) {
         this.amount = amount;
     }
+
+    /* Management methods */
+    public double getSubtotal() {
+        return this.price * this.amount;
+    }
 }

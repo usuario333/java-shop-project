@@ -1,4 +1,4 @@
-package store.ui;
+package store.ui.helpers;
 
 import java.awt.*;
 

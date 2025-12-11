@@ -16,17 +16,19 @@ public class Order {
     }
 
     //Fundamentals fields
-    private final char[] id;
-    private final int createdAt;
+    private final char[] id; //Internal Order ID
+    private final long createdAt;
     private Status currentStatus;
     private Client client;
     private HashMap<char[], ItemOrder> items;
 
     //Constructor
-    public Order(char[] id, int timestamp, Client client) {
+    public Order(char[] id, long timestamp, Client client) {
         this.id = id;
         this.createdAt = timestamp;
         this.client = client;
+        this.currentStatus = Status.CREATED;
+        this.items = new HashMap<>();
     }
 
     /* Getters and Setters */
@@ -34,12 +36,12 @@ public class Order {
         return id;
     }
 
-    public int getCreatedAt() {
+    public long getCreatedAt() {
         return createdAt;
     }
 
-    public Status getCurrentStatus() {
-        return currentStatus;
+    public String getCurrentStatus() {
+        return currentStatus.toString();
     }
 
     public void setCurrentStatus(Status currentStatus) {
@@ -65,5 +67,13 @@ public class Order {
 
     public void removeItem(char[] itemID) {
         this.items.remove(itemID);
+    }
+
+    public double getTotal() {
+        double total = 0.0;
+        for (ItemOrder item : items.values()) {
+            total += item.getSubtotal();
+        }
+        return total;
     }
 }

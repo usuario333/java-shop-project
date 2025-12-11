@@ -7,11 +7,11 @@ import java.util.Random;
 
 public class SHA256Hashing {
 
-    public static String generateRandomHash() {
+    public static char[] generateRandomHash() {
         return SHA256Hashing.generateSHA256Hash(
                 String.valueOf(
                         new Random().nextInt(1000000)
-                )).substring(12, 22);
+                )).substring(12, 22).toCharArray();
     }
 
     public static String generateSHA256Hash(String input) {

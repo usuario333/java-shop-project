@@ -2,18 +2,19 @@ package store.models;
 
 public class Product {
     //Fundamentals fields
-    private final char[] id;//Internal Oder ID
-    private String reference; //Internal Product ID
+    private final char[] id; //Internal Product ID
+    private String reference;
     private String name;
     private double price;
     private ProductCategory category;
 
     //Constructor
-    public Product(char[] id, String reference, String name, double price) {
+    public Product(char[] id, String reference, String name, double price, ProductCategory category) {
         this.id = id;
         this.reference = reference;
         this.name = name;
         this.price = price;
+        this.category = category;
     }
 
     /* Getters and Setters */
